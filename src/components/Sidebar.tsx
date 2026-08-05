@@ -1,30 +1,22 @@
 import React from "react";
+import PriceRangeSlider from "./PriceRangeSlider";
 
 interface SidebarProps {
   selectedCategories: string[];
   setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
 
-  priceRange: {
-    min: number;
-    max: number;
-  };
-
-  setPriceRange: React.Dispatch<
-    React.SetStateAction<{
-      min: number;
-      max: number;
-    }>
-  >;
+  priceRange: [number, number];
+  setPriceRange: React.Dispatch<React.SetStateAction<[number, number]>>;
 
   selectedRating: number;
-
-setSelectedRating: React.Dispatch<
-  React.SetStateAction<number>
->;
-
+  setSelectedRating: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const categories = ["Electronics", "Apparel", "Footwear"];
+const categories = [
+  "Electronics",
+  "Apparel",
+  "Footwear",
+];
 
 const Sidebar = ({
   selectedCategories,
@@ -43,26 +35,27 @@ const Sidebar = ({
   };
 
   return (
-    <aside className="sticky top-0 h-screen w-72 border-r bg-white p-6 shadow">
+    <aside className="sticky top-0 h-screen w-72 overflow-y-auto border-r bg-white p-6 shadow">
       <h2 className="mb-8 text-2xl font-bold">Filters</h2>
 
       {/* Category Filter */}
       <div className="mb-8">
-        <h3 className="mb-4 font-semibold">Category</h3>
+        <h3 className="mb-4 text-lg font-semibold">Category</h3>
 
         <div className="space-y-3">
           {categories.map((category) => (
             <label
               key={category}
-              className="flex items-center gap-2 cursor-pointer"
+              className="flex cursor-pointer items-center gap-3"
             >
               <input
                 type="checkbox"
                 checked={selectedCategories.includes(category)}
                 onChange={() => handleCategoryChange(category)}
+                className="h-4 w-4 accent-blue-600"
               />
 
-              <span>{category}</span>
+              <span className="text-gray-700">{category}</span>
             </label>
           ))}
         </div>
@@ -70,95 +63,57 @@ const Sidebar = ({
 
       {/* Price Filter */}
       <div className="mb-8">
-        <h3 className="mb-4 font-semibold">Price Range</h3>
+        <h3 className="mb-4 text-lg font-semibold">
+          Price Range
+        </h3>
 
-        <div className="space-y-5">
-          {/* Minimum Price */}
-          <div>
-            <div className="mb-2 flex items-center justify-between text-sm">
-              <span>Min Price</span>
-              <span className="font-medium">${priceRange.min}</span>
-            </div>
-
-            <input
-              type="range"
-              min={0}
-              max={1000}
-              step={10}
-              value={priceRange.min}
-              onChange={(e) =>
-                setPriceRange((prev) => ({
-                  ...prev,
-                  min: Math.min(Number(e.target.value), prev.max),
-                }))
-              }
-              className="w-full cursor-pointer"
-            />
-          </div>
-
-          {/* Maximum Price */}
-          <div>
-            <div className="mb-2 flex items-center justify-between text-sm">
-              <span>Max Price</span>
-              <span className="font-medium">${priceRange.max}</span>
-            </div>
-
-            <input
-              type="range"
-              min={0}
-              max={1000}
-              step={10}
-              value={priceRange.max}
-              onChange={(e) =>
-                setPriceRange((prev) => ({
-                  ...prev,
-                  max: Math.max(Number(e.target.value), prev.min),
-                }))
-              }
-              className="w-full cursor-pointer"
-            />
-          </div>
-        </div>
+        <PriceRangeSlider
+          values={priceRange}
+          setValues={setPriceRange}
+        />
       </div>
 
-      {/* Rating Filter (Static for Phase 3) */}
-{/* Rating Filter */}
-<div>
-  <h3 className="mb-4 font-semibold">
-    Minimum Rating
-  </h3>
+      {/* Rating Filter */}
+      <div>
+        <h3 className="mb-4 text-lg font-semibold">
+          Minimum Rating
+        </h3>
 
-  <div className="space-y-2">
-    {[5, 4, 3, 2, 1].map((rating) => (
-      <label
-        key={rating}
-        className="flex cursor-pointer items-center gap-2"
-      >
-        <input
-          type="radio"
-          name="rating"
-          checked={selectedRating === rating}
-          onChange={() =>
-            setSelectedRating(rating)
-          }
-        />
+        <div className="space-y-3">
+          {[5, 4, 3, 2, 1].map((rating) => (
+            <label
+              key={rating}
+              className="flex cursor-pointer items-center gap-3"
+            >
+              <input
+                type="radio"
+                name="rating"
+                checked={selectedRating === rating}
+                onChange={() => setSelectedRating(rating)}
+                className="accent-blue-600"
+              />
 
-        <span>{rating} ⭐ & Up</span>
-      </label>
-    ))}
+              <span className="text-gray-700">
+                {rating} ⭐ & Up
+              </span>
+            </label>
+          ))}
 
-    <label className="mt-3 flex cursor-pointer items-center gap-2">
-      <input
-        type="radio"
-        name="rating"
-        checked={selectedRating === 0}
-        onChange={() => setSelectedRating(0)}
-      />
+          <label className="flex cursor-pointer items-center gap-3 pt-2">
+            <input
+              type="radio"
+              name="rating"
+              checked={selectedRating === 0}
+              onChange={() => setSelectedRating(0)}
+              className="accent-blue-600"
+            />
 
-      <span>All Ratings</span>
-    </label>
-  </div>
-</div>
+            <span className="font-medium text-blue-600">
+              All Ratings
+            </span>
+          </label>
+        </div>
+      </div>
     </aside>
   );
 };

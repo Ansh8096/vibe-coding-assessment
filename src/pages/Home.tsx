@@ -7,10 +7,10 @@ import { products } from "../data/products";
 const Home = () => {
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-    const [priceRange, setPriceRange] = useState({
-        min: 0,
-        max: 1000,
-    });
+const [priceRange, setPriceRange] = useState<[number, number]>([
+  0,
+  1000,
+]);
 
     const [selectedRating, setSelectedRating] = useState(0);
 
@@ -18,10 +18,7 @@ const Home = () => {
 
     const resetFilters = () => {
         setSelectedCategories([]);
-        setPriceRange({
-            min: 0,
-            max: 1000,
-        });
+        setPriceRange([0, 1000]);
         setSelectedRating(0);
         setSortBy("");
     };
@@ -33,8 +30,8 @@ const Home = () => {
                 selectedCategories.includes(product.category);
 
             const priceMatch =
-                product.price >= priceRange.min &&
-                product.price <= priceRange.max;
+                product.price >= priceRange[0] &&
+product.price <= priceRange[1]
 
             const ratingMatch =
                 selectedRating === 0 ||

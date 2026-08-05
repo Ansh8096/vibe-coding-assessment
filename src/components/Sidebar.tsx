@@ -1,4 +1,27 @@
-const Sidebar = () => {
+interface SidebarProps {
+  selectedCategories: string[];
+  setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+const categories = [
+  "Electronics",
+  "Apparel",
+  "Footwear",
+];
+
+const Sidebar = ({
+  selectedCategories,
+  setSelectedCategories,
+}: SidebarProps) => {
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((item) => item !== category)
+        : [...prev, category]
+    );
+  };
+
   return (
     <aside className="sticky top-0 h-screen w-72 border-r bg-white p-6 shadow">
       <h2 className="mb-8 text-2xl font-bold">
@@ -11,20 +34,22 @@ const Sidebar = () => {
         </h3>
 
         <div className="space-y-3">
-          <label className="flex items-center gap-2">
-            <input type="checkbox" />
-            Electronics
-          </label>
+          {categories.map((category) => (
+            <label
+              key={category}
+              className="flex items-center gap-2"
+            >
+              <input
+                type="checkbox"
+                checked={selectedCategories.includes(category)}
+                onChange={() =>
+                  handleCategoryChange(category)
+                }
+              />
 
-          <label className="flex items-center gap-2">
-            <input type="checkbox" />
-            Apparel
-          </label>
-
-          <label className="flex items-center gap-2">
-            <input type="checkbox" />
-            Footwear
-          </label>
+              {category}
+            </label>
+          ))}
         </div>
       </div>
 
@@ -52,7 +77,7 @@ const Sidebar = () => {
         </h3>
 
         <div className="space-y-2">
-          {[5, 4, 3, 2, 1].map((rating) => (
+          {[5,4,3,2,1].map((rating)=>(
             <label
               key={rating}
               className="flex items-center gap-2"

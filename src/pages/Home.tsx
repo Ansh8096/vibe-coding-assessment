@@ -7,21 +7,32 @@ import { products } from "../data/products";
 const Home = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  const filteredProducts = useMemo(() => {
-    if (selectedCategories.length === 0) {
-      return products;
-    }
+  const [priceRange, setPriceRange] = useState({
+    min: 0,
+    max: 1000,
+  });
 
-    return products.filter((product) =>
-      selectedCategories.includes(product.category)
-    );
-  }, [selectedCategories]);
+  const filteredProducts = useMemo(() => {
+    return products.filter((product) => {
+      const categoryMatch =
+        selectedCategories.length === 0 ||
+        selectedCategories.includes(product.category);
+
+      const priceMatch =
+        product.price >= priceRange.min &&
+        product.price <= priceRange.max;
+
+      return categoryMatch && priceMatch;
+    });
+  }, [selectedCategories, priceRange]);
 
   return (
     <div className="flex min-h-screen bg-gray-100">
       <Sidebar
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}
+        priceRange={priceRange}
+        setPriceRange={setPriceRange}
       />
 
       <main className="flex-1 p-8">

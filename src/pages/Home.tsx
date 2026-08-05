@@ -12,28 +12,44 @@ const Home = () => {
     max: 1000,
   });
 
-  const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
-      const categoryMatch =
-        selectedCategories.length === 0 ||
-        selectedCategories.includes(product.category);
+  const [selectedRating, setSelectedRating] = useState(0);
 
-      const priceMatch =
-        product.price >= priceRange.min &&
-        product.price <= priceRange.max;
+const filteredProducts = useMemo(() => {
+  return products.filter((product) => {
+    const categoryMatch =
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(product.category);
 
-      return categoryMatch && priceMatch;
-    });
-  }, [selectedCategories, priceRange]);
+    const priceMatch =
+      product.price >= priceRange.min &&
+      product.price <= priceRange.max;
+
+    const ratingMatch =
+      selectedRating === 0 ||
+      product.rating >= selectedRating;
+
+    return (
+      categoryMatch &&
+      priceMatch &&
+      ratingMatch
+    );
+  });
+}, [
+  selectedCategories,
+  priceRange,
+  selectedRating,
+]);
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      <Sidebar
-        selectedCategories={selectedCategories}
-        setSelectedCategories={setSelectedCategories}
-        priceRange={priceRange}
-        setPriceRange={setPriceRange}
-      />
+<Sidebar
+  selectedCategories={selectedCategories}
+  setSelectedCategories={setSelectedCategories}
+  priceRange={priceRange}
+  setPriceRange={setPriceRange}
+  selectedRating={selectedRating}
+  setSelectedRating={setSelectedRating}
+/>
 
       <main className="flex-1 p-8">
         <div className="mb-8 flex items-center justify-between">

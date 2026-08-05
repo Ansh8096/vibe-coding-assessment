@@ -15,6 +15,13 @@ interface SidebarProps {
       max: number;
     }>
   >;
+
+  selectedRating: number;
+
+setSelectedRating: React.Dispatch<
+  React.SetStateAction<number>
+>;
+
 }
 
 const categories = ["Electronics", "Apparel", "Footwear"];
@@ -24,6 +31,8 @@ const Sidebar = ({
   setSelectedCategories,
   priceRange,
   setPriceRange,
+  selectedRating,
+  setSelectedRating,
 }: SidebarProps) => {
   const handleCategoryChange = (category: string) => {
     setSelectedCategories((prev) =>
@@ -113,22 +122,43 @@ const Sidebar = ({
       </div>
 
       {/* Rating Filter (Static for Phase 3) */}
-      <div>
-        <h3 className="mb-4 font-semibold">Minimum Rating</h3>
+{/* Rating Filter */}
+<div>
+  <h3 className="mb-4 font-semibold">
+    Minimum Rating
+  </h3>
 
-        <div className="space-y-2">
-          {[5, 4, 3, 2, 1].map((rating) => (
-            <label
-              key={rating}
-              className="flex items-center gap-2 cursor-pointer"
-            >
-              <input type="radio" name="rating" />
+  <div className="space-y-2">
+    {[5, 4, 3, 2, 1].map((rating) => (
+      <label
+        key={rating}
+        className="flex cursor-pointer items-center gap-2"
+      >
+        <input
+          type="radio"
+          name="rating"
+          checked={selectedRating === rating}
+          onChange={() =>
+            setSelectedRating(rating)
+          }
+        />
 
-              <span>{rating} ⭐</span>
-            </label>
-          ))}
-        </div>
-      </div>
+        <span>{rating} ⭐ & Up</span>
+      </label>
+    ))}
+
+    <label className="mt-3 flex cursor-pointer items-center gap-2">
+      <input
+        type="radio"
+        name="rating"
+        checked={selectedRating === 0}
+        onChange={() => setSelectedRating(0)}
+      />
+
+      <span>All Ratings</span>
+    </label>
+  </div>
+</div>
     </aside>
   );
 };

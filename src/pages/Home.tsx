@@ -16,42 +16,52 @@ const Home = () => {
 
     const [sortBy, setSortBy] = useState("");
 
-const filteredProducts = useMemo(() => {
-  const filtered = products.filter((product) => {
-    const categoryMatch =
-      selectedCategories.length === 0 ||
-      selectedCategories.includes(product.category);
+    const resetFilters = () => {
+        setSelectedCategories([]);
+        setPriceRange({
+            min: 0,
+            max: 1000,
+        });
+        setSelectedRating(0);
+        setSortBy("");
+    };
 
-    const priceMatch =
-      product.price >= priceRange.min &&
-      product.price <= priceRange.max;
+    const filteredProducts = useMemo(() => {
+        const filtered = products.filter((product) => {
+            const categoryMatch =
+                selectedCategories.length === 0 ||
+                selectedCategories.includes(product.category);
 
-    const ratingMatch =
-      selectedRating === 0 ||
-      product.rating >= selectedRating;
+            const priceMatch =
+                product.price >= priceRange.min &&
+                product.price <= priceRange.max;
 
-    return categoryMatch && priceMatch && ratingMatch;
-  });
+            const ratingMatch =
+                selectedRating === 0 ||
+                product.rating >= selectedRating;
 
-  switch (sortBy) {
-    case "price-low":
-      return [...filtered].sort((a, b) => a.price - b.price);
+            return categoryMatch && priceMatch && ratingMatch;
+        });
 
-    case "price-high":
-      return [...filtered].sort((a, b) => b.price - a.price);
+        switch (sortBy) {
+            case "price-low":
+                return [...filtered].sort((a, b) => a.price - b.price);
 
-    case "rating":
-      return [...filtered].sort((a, b) => b.rating - a.rating);
+            case "price-high":
+                return [...filtered].sort((a, b) => b.price - a.price);
 
-    default:
-      return filtered;
-  }
-}, [
-  selectedCategories,
-  priceRange,
-  selectedRating,
-  sortBy,
-]);
+            case "rating":
+                return [...filtered].sort((a, b) => b.rating - a.rating);
+
+            default:
+                return filtered;
+        }
+    }, [
+        selectedCategories,
+        priceRange,
+        selectedRating,
+        sortBy,
+    ]);
 
     return (
         <div className="flex min-h-screen bg-gray-100">
@@ -75,12 +85,27 @@ const filteredProducts = useMemo(() => {
                     </div>
 
                     <SortDropdown
-  sortBy={sortBy}
-  setSortBy={setSortBy}
-/>
+                        sortBy={sortBy}
+                        setSortBy={setSortBy}
+                    />
                 </div>
 
-                <ProductGrid products={filteredProducts} />
+                {filteredProducts.length === 0 ? (
+                    <div className="mt-20 flex flex-col items-center justify-center rounded-xl bg-white p-10 shadow">
+                        <h2 className="mb-4 text-2xl font-bold text-gray-700">
+                            No items match your criteria.
+                        </h2>
+
+                        <button
+                            onClick={resetFilters}
+                            className="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700"
+                        >
+                            Reset Filters
+                        </button>
+                    </div>
+                ) : (
+                    <ProductGrid products={filteredProducts} />
+                )}
             </main>
         </div>
     );

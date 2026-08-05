@@ -1,75 +1,197 @@
-# React + TypeScript + Vite
+# 🛍️ E-Commerce Product Multi-Filter Sidebar
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React + TypeScript application that demonstrates an interactive product browsing experience with real-time filtering and sorting capabilities.
 
-Currently, two official plugins are available:
+Built as part of a Vibe Coding Assessment to showcase component-based architecture, state management, and responsive UI development.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 📂 Multi-select Category Filtering
+- 💰 Dual-Thumb Price Range Slider
+- ⭐ Minimum Rating Filter
+- ⚡ Instant Filtering (No Submit Button Required)
+- 🔀 Product Sorting
+  - Price: Low to High
+  - Price: High to Low
+  - Top Rated First
+- 📦 Dynamic Product Grid
+- 🔄 Reset Filters
+- 🚫 Empty State when no products match
+- 📱 Responsive Layout
+- 🎨 Clean & Modern UI
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🖼️ Preview
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Product Listing
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Sticky filter sidebar
+- Responsive product grid
+- Interactive filtering
+- Real-time sorting
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
 
+## 🛠️ Tech Stack
+
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Range
+- Lucide React
+
+---
+
+## 📁 Project Structure
+
+```text
+src
+│
+├── components
+│   ├── Sidebar.tsx
+│   ├── ProductCard.tsx
+│   ├── ProductGrid.tsx
+│   ├── PriceRangeSlider.tsx
+│   └── SortDropdown.tsx
+│
+├── data
+│   └── products.ts
+│
+├── pages
+│   └── Home.tsx
+│
+├── types
+│   └── product.ts
+│
+├── App.tsx
+└── main.tsx
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🚀 Getting Started
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Clone the repository
+
+```bash
+git clone https://github.com/<your-username>/<repo-name>.git
+```
+
+### Navigate to the project
+
+```bash
+cd <repo-name>
+```
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Start the development server
+
+```bash
+npm run dev
+```
+
+Open:
 
 ```
+http://localhost:5173
+```
+
+---
+
+## 🎯 Filtering Workflow
+
+Products are processed using the following pipeline:
+
+```text
+Products
+    │
+    ▼
+Category Filter
+    │
+    ▼
+Price Filter
+    │
+    ▼
+Rating Filter
+    │
+    ▼
+Sorting
+    │
+    ▼
+Display Products
+```
+
+This ensures products are filtered first and then sorted according to the selected option.
+
+---
+
+## 📸 Functionality
+
+### Category Filter
+
+- Supports multiple category selection.
+- Displays all products when no category is selected.
+
+### Price Filter
+
+- Interactive dual-thumb range slider.
+- Filters products within the selected price range.
+
+### Rating Filter
+
+- Displays products with ratings greater than or equal to the selected value.
+
+### Sorting
+
+- Price: Low to High
+- Price: High to Low
+- Top Rated First
+
+### Empty State
+
+When no products satisfy the selected filters, the application displays an informative message along with a **Reset Filters** button.
+
+---
+
+## 🎨 UI Highlights
+
+- Sticky Sidebar
+- Responsive Product Grid
+- Hover Effects
+- Modern Card Design
+- Professional Filtering Experience
+
+---
+
+## 📌 Future Improvements
+
+- Backend API integration
+- Pagination
+- Product Search
+- Brand Filter
+- Dark Mode
+- Animations
+- Wishlist Feature
+
+---
+
+## 👨‍💻 Author
+
+**Ansh Verma**
+
+GitHub: https://github.com/Ansh8096
+
+LinkedIn: https://www.linkedin.com/in/<your-linkedin>
+
+---
+
+## ⭐ If you found this project useful, consider giving it a star!
